@@ -1,6 +1,6 @@
 function onePhotographerTemplate(data) {
 
-    const { name, portrait, city, country, tagline } = data;
+    const { name, portrait, city, country, tagline, id } = data;
   
     const picture = `../assets/photographers/${portrait}`;
   
@@ -63,31 +63,54 @@ function onePhotographerTemplate(data) {
       return img;
   
     }
-  
+
+    function getMedias(media) {
+        console.log(media)
     
-  
-  
-  
-  
-   
-  
-  
+        const mediaContent = document.querySelector(".media_content");
+        mediaContent.innerHTML = "";
+        let medias = media.filter((media) => media.photographerId === Number(id));
+    
+
+        medias.forEach((media) => {
+    
+          console.log(media)
+          console.log(medias)
+          const article = document.createElement("article");
+          const link = document.createElement("a");
+          const typeOfMedia = media.video
+            ? document.createElement("video") : document.createElement("img");
+          article.dataset.id = media.id;
+          const cardDetails = document.createElement("div");
+          const cardName = document.createElement("span");
+          const cardLikes = document.createElement("span");
+    
+    
+    
+          typeOfMedia.setAttribute('src', `./assets/images/${id}/${media?.image || media.video}`);
+          console.log(typeOfMedia);
+          link.href = "#";
+          cardDetails.classList.add("card_details")
+          cardName.textContent = media.title;
+          cardLikes.textContent = media.likes + "♥";
+          cardLikes.classList.add("card_likes");
+    
+          mediaContent.appendChild(article)
+          link.appendChild(typeOfMedia);
+    
+          article.appendChild(link)
+          article.appendChild(cardDetails)
+          cardDetails.appendChild(cardName)
+          cardDetails.appendChild(cardLikes)
+    
      
-   
+        });
     
-  
     
+    }
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-    return { getUserCardDOM, getUserAvatarDOM}
+    return { getUserCardDOM, getUserAvatarDOM, getMedias}
   
   
   

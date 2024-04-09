@@ -38,6 +38,11 @@
   cursor: pointer;
 }
 
+.card_details {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 
 .contact_button {

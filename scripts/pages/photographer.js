@@ -22,6 +22,21 @@ function displayPhotographer(photographer) {
     
 }
 
+async function displayMedia(medias, templatePhoto) {
+    const mediaContent = document.querySelector(".media_content");
+    medias.forEach((media) => {
+        
+        const profileMedia = templatePhoto.getMedias(media);
+
+        mediaContent.appendChild(profileMedia);
+
+    })
+    
+    console.log(medias);
+
+}
+
+
 async function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -35,11 +50,14 @@ async function init() {
     const templatePhoto = onePhotographerTemplate(onePhotographer);
 
 			
+            let medias = data.media.filter((media) => media.photographerId === Number(id));
+    console.log(medias)
   
     
     const photographerSection = document.querySelector(".photograph-header");
     photographerSection.appendChild(templatePhoto.getUserCardDOM());
-    
+    templatePhoto.getMedias(data.media);
+   
    
     
 
