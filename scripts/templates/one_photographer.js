@@ -70,6 +70,8 @@ function onePhotographerTemplate(data) {
         const mediaContent = document.querySelector(".media_content");
         mediaContent.innerHTML = "";
         let medias = media.filter((media) => media.photographerId === Number(id));
+        const dropdownSortBy = document.querySelector(".select");
+        dropdownSortBy.addEventListener("change", (e)=> dropdownSortByFn(e.target.value, medias))
     
 
         medias.forEach((media) => {
@@ -108,9 +110,38 @@ function onePhotographerTemplate(data) {
     
     
     }
+
+    function dropdownSortByFn(orderBy, medias) {
+
+   
+        switch (orderBy) {
+    
+          case "popularity": {
+            const mediaSort = medias.sort((a, b) => b.likes - a.likes);
+            console.log(medias);
+            break;
+          }
+    
+          case "date": {
+            medias.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            console.log(medias)
+            break;
+          }
+    
+          case "title": {
+            medias.sort((a, b) => a.title.localeCompare(b.title));
+            console.log(medias)
+            break;
+          }
+        }
+    
+        getMedias(medias);
+    
+    
+      }
   
   
-    return { getUserCardDOM, getUserAvatarDOM, getMedias}
+    return { getUserCardDOM, getUserAvatarDOM, getMedias, dropdownSortByFn}
   
   
   

@@ -58,6 +58,19 @@
     cursor: pointer;
 }
 
+.dropdown {
+    margin: 25px 100px;
+
+}
+
+#sortBy {
+  height: 32px;
+  width: 95px;
+  background-color: #901c1c;
+  color: white;
+  border-radius: 5px;
+}
+
 .modal {
     border-radius: 5px;
     background-color: #DB8876;
