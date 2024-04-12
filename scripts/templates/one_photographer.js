@@ -1,6 +1,6 @@
 function onePhotographerTemplate(data) {
 
-    const { name, portrait, city, country, tagline, id } = data;
+    const { name, portrait, city, country, tagline, id, price } = data;
   
     const picture = `../assets/photographers/${portrait}`;
   
@@ -99,16 +99,49 @@ function onePhotographerTemplate(data) {
     
           mediaContent.appendChild(article)
           link.appendChild(typeOfMedia);
-    
           article.appendChild(link)
           article.appendChild(cardDetails)
           cardDetails.appendChild(cardName)
           cardDetails.appendChild(cardLikes)
+
+
+
+          const poppriceCard = document.querySelector(".popprice_card");
+          console.log(poppriceCard)
+
+
+          let total = medias.reduce((sum, media) => sum + media.likes, 0)
+          poppriceCard.children[0].textContent = total + " ♥";
+          poppriceCard.children[1].textContent = price + "€ / jour";
+          
+
+
+          let counter = media.likes
+          cardLikes.addEventListener("click", () => {
+
+            
+            if (cardLikes.classList.contains("like")) {
+              counter--;
+              cardLikes.classList.remove("like");
+              console.log("counter--");
+              cardLikes.textContent = counter + "♥";
+              total--;
+              console.log(total)
+              poppriceCard.children[0].textContent = total + " ♥"
+            } else {
+              cardLikes.classList.add("like");
+              counter++;
+              total++
+              cardLikes.textContent = counter + "♥"
+              poppriceCard.children[0].textContent = total + " ♥"
+              console.log("counter++")
+             
+            }
+            console.log(media.id);
+            console.log(counter);
     
-     
-        });
-    
-    
+          });
+        }); 
     }
 
     function dropdownSortByFn(orderBy, medias) {

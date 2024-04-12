@@ -71,6 +71,22 @@
   border-radius: 5px;
 }
 
+.card_details {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.card_likes {
+    color: #901C1C;
+    min-width: 40px;
+    max-height: 25px;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    
+}
+
 .modal {
     border-radius: 5px;
     background-color: #DB8876;
@@ -123,4 +139,19 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+.popprice_card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #db8876;
+    width: 225px;
+    position: fixed;
+    bottom: 0;
+    right: 32px;
+    padding: 15px 20px;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+
 }
