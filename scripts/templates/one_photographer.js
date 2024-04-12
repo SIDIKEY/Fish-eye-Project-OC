@@ -72,8 +72,41 @@ function onePhotographerTemplate(data) {
         let medias = media.filter((media) => media.photographerId === Number(id));
         const dropdownSortBy = document.querySelector(".select");
         dropdownSortBy.addEventListener("change", (e)=> dropdownSortByFn(e.target.value, medias))
-    
 
+        const onNextMedia = (i, medias, lightboxMedia)=> {
+            if(medias[i+1]) {  
+              i++;
+              console.log("i++")
+              lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
+              return i;
+              
+            }else {
+              i=0
+              lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
+              return i;
+        
+            }
+            
+        }
+
+        const onPreviousMedia = (i, medias, lightboxMedia)=> {
+            if(medias[i-1]) {  
+              i--;
+              console.log("i--")
+              lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
+              return i;
+              
+            }else {
+              i = medias.length -1;
+              console.log(medias);
+              lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
+              return i;
+        
+            }
+            
+        }
+
+        
         medias.forEach((media) => {
     
           console.log(media)
@@ -94,7 +127,7 @@ function onePhotographerTemplate(data) {
           link.href = "#";
           cardDetails.classList.add("card_details")
           cardName.textContent = media.title;
-          cardLikes.textContent = media.likes + "♥";
+          cardLikes.textContent = media.likes + " ♥";
           cardLikes.classList.add("card_likes");
     
           mediaContent.appendChild(article)
@@ -103,6 +136,37 @@ function onePhotographerTemplate(data) {
           article.appendChild(cardDetails)
           cardDetails.appendChild(cardName)
           cardDetails.appendChild(cardLikes)
+
+          link.addEventListener("click", () => {
+
+            const currentMedia = document.getElementById("current_media")
+            const lightbox = document.getElementById("media_modal");
+            const nextMedia = document.getElementById("next_media")
+            const previousMedia = document.getElementById("previous_media")
+
+            console.log("clicked")   
+            lightbox.style.display = "flex";
+            lightbox.style.justifyContent = "center"
+            
+            const lightboxMedia = media.video
+              ? document.createElement("video") : document.createElement("img");
+            console.log(media);
+            lightboxMedia.setAttribute('src', `./assets/images/${id}/${media?.image || media.video}`);
+            currentMedia.appendChild(lightboxMedia)
+    
+            
+    
+            let i = medias.findIndex(item => media.id === item.id);
+            console.log(i)
+    
+            nextMedia.addEventListener("click", () => {
+              i = onNextMedia(i, medias, lightboxMedia)
+            })
+    
+            previousMedia.addEventListener("click", () => {
+              i = onPreviousMedia(i, medias, lightboxMedia)
+            })     
+          });
 
 
 
@@ -124,7 +188,7 @@ function onePhotographerTemplate(data) {
               counter--;
               cardLikes.classList.remove("like");
               console.log("counter--");
-              cardLikes.textContent = counter + "♥";
+              cardLikes.textContent = counter + " ♥";
               total--;
               console.log(total)
               poppriceCard.children[0].textContent = total + " ♥"
@@ -132,7 +196,7 @@ function onePhotographerTemplate(data) {
               cardLikes.classList.add("like");
               counter++;
               total++
-              cardLikes.textContent = counter + "♥"
+              cardLikes.textContent = counter + " ♥"
               poppriceCard.children[0].textContent = total + " ♥"
               console.log("counter++")
              
@@ -141,7 +205,21 @@ function onePhotographerTemplate(data) {
             console.log(counter);
     
           });
+
+          
         }); 
+        const closeModal = document.getElementById("close_modal");
+        const lightbox = document.getElementById("media_modal");
+
+        closeModal.addEventListener("click", () => {
+
+          const child = document.querySelector('#current_media :nth-child(1)');
+
+          lightbox.style.display = "none";
+          console.log(child);
+          child.remove();
+          console.log("closed")
+        })
     }
 
     function dropdownSortByFn(orderBy, medias) {
