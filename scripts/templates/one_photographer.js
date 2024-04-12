@@ -165,8 +165,29 @@ function onePhotographerTemplate(data) {
     
             previousMedia.addEventListener("click", () => {
               i = onPreviousMedia(i, medias, lightboxMedia)
-            })     
+            }) 
+            
+            
+            document.addEventListener('keydown', event => {
+
+                if(lightbox.style.display === "flex") {
+                  if (event.key === "ArrowLeft") {
+                    console.log("Left key");
+                     i = onPreviousMedia(i, medias, lightboxMedia)
+          
+                  } else if (event.key === "ArrowRight") {
+                    console.log("Right key");
+                    i = onNextMedia(i, medias, lightboxMedia);
+          
+                  }
+                  event.preventDefault();
+                }          
+              })     
           });
+
+         
+
+          
 
 
 
