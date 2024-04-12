@@ -175,10 +175,15 @@ function onePhotographerTemplate(data) {
                     console.log("Left key");
                      i = onPreviousMedia(i, medias, lightboxMedia)
           
-                  } else if (event.key === "ArrowRight") {
+                  } if (event.key === "ArrowRight") {
                     console.log("Right key");
                     i = onNextMedia(i, medias, lightboxMedia);
           
+                  } if (event.key === "Escape") {
+                    console.log("esc");
+                    lightbox.style.display = "none";
+                    
+                    
                   }
                   event.preventDefault();
                 }          
@@ -228,7 +233,9 @@ function onePhotographerTemplate(data) {
           });
 
           
-        }); 
+        });
+        
+        
         const closeModal = document.getElementById("close_modal");
         const lightbox = document.getElementById("media_modal");
 
@@ -242,6 +249,8 @@ function onePhotographerTemplate(data) {
           console.log("closed")
         })
     }
+
+
 
     function dropdownSortByFn(orderBy, medias) {
 
