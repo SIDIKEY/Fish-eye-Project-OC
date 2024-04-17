@@ -15,6 +15,7 @@ function photographerTemplate(data) {
         const h5 = document.createElement("h5");
         const linkDiv = document.createElement('div');
         link.appendChild(linkDiv);
+        
         img.setAttribute("src", picture);
         img.setAttribute('alt', name);
         linkDiv.appendChild(img);    
@@ -23,6 +24,8 @@ function photographerTemplate(data) {
         h3.textContent = city+ ", " + country;
         h4.textContent = tagline;
         h5.textContent = price + "€/jour";
+
+
         article.appendChild(link);
         article.appendChild(h2);
         article.appendChild(h3);

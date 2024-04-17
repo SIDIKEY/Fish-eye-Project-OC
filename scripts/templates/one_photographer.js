@@ -6,12 +6,10 @@ function onePhotographerTemplate(data) {
   
     function getUserCardDOM() {
   
-      // Déclaration des éléments du DOM
-  
   
       const img = document.createElement("img");
-      const link = document.createElement("a");
-      const linkContainer = document.createElement("div");
+      const Link = document.createElement("a");
+      const linkContainer = document.getElementById("link_container");
       const profileName = document.querySelector("h1");
       const profileLocation = document.querySelector(".profile > h2");
       const profileTagline = document.querySelector(".profile > p");
@@ -19,13 +17,15 @@ function onePhotographerTemplate(data) {
   
       
   
-      console.log(profilePic)
+      
+
+      const logo = document.getElementById("logo");
+      console.log(linkContainer)
   
-  
-  
-  
-      link.href = "./index.html";
-      linkContainer.appendChild(link)
+      Link.href = "./index.html";
+      linkContainer.appendChild(Link);
+      Link.appendChild(logo)
+      
   
   
   
@@ -46,25 +46,49 @@ function onePhotographerTemplate(data) {
       profileDiv.appendChild(profileName);
       profileDiv.appendChild(profileLocation);
       profileDiv.appendChild(profileTagline);
-      profilePic.appendChild(img)
-        ;
+      profilePic.appendChild(img);
   
   
   
       return profileName, profileLocation, profileTagline, profilePic;
     }
+
   
     function getUserAvatarDOM() {
       const img = document.createElement('img');
       img.setAttribute("src", picture);
       img.setAttribute("alt", "Photo de " + name);
   
-  
       return img;
-  
     }
 
+    function dropdownSortByFn(orderBy, medias) { 
+        switch (orderBy) {
+          case "popularity": {
+            const mediaSort = medias.sort((a, b) => b.likes - a.likes);
+            console.log(medias);
+            break;
+          }
+
+          case "date": {
+            medias.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            console.log(medias)
+            break;
+          }
+    
+          case "title": {
+            medias.sort((a, b) => a.title.localeCompare(b.title));
+            console.log(medias)
+            break;
+          }
+        }
+        getMedias(medias);  
+  }
+
+
+
     function getMedias(media) {
+
         console.log(media)
     
         const mediaContent = document.querySelector(".media_content");
@@ -84,9 +108,7 @@ function onePhotographerTemplate(data) {
               i=0
               lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
               return i;
-        
-            }
-            
+            }   
         }
 
         const onPreviousMedia = (i, medias, lightboxMedia)=> {
@@ -101,28 +123,24 @@ function onePhotographerTemplate(data) {
               console.log(medias);
               lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
               return i;
-        
-            }
-            
+            }    
         }
 
         
         medias.forEach((media) => {
-    
           console.log(media)
           console.log(medias)
           const article = document.createElement("article");
           const link = document.createElement("a");
-          const typeOfMedia = media.video
-            ? document.createElement("video") : document.createElement("img");
+          const typeOfMedia = media.video ? document.createElement("video") : document.createElement("img");
+          console.log(media.video)
           article.dataset.id = media.id;
           const cardDetails = document.createElement("div");
           const cardName = document.createElement("span");
           const cardLikes = document.createElement("span");
     
-    
-    
-          typeOfMedia.setAttribute('src', `./assets/images/${id}/${media?.image || media.video}`);
+          typeOfMedia.setAttribute('src', `./assets/images/${id}/${media?.video || media.image}`);
+          typeOfMedia.controls = true;
           console.log(typeOfMedia);
           link.href = "#";
           cardDetails.classList.add("card_details")
@@ -138,23 +156,20 @@ function onePhotographerTemplate(data) {
           cardDetails.appendChild(cardLikes)
 
           link.addEventListener("click", () => {
-
             const currentMedia = document.getElementById("current_media")
             const lightbox = document.getElementById("media_modal");
             const nextMedia = document.getElementById("next_media")
             const previousMedia = document.getElementById("previous_media")
+            console.log("clicked")
 
-            console.log("clicked")   
             lightbox.style.display = "flex";
-            lightbox.style.justifyContent = "center"
-            
+            lightbox.style.justifyContent = "center";
             const lightboxMedia = media.video
               ? document.createElement("video") : document.createElement("img");
             console.log(media);
             lightboxMedia.setAttribute('src', `./assets/images/${id}/${media?.image || media.video}`);
+            lightboxMedia.controls = true;
             currentMedia.appendChild(lightboxMedia)
-    
-            
     
             let i = medias.findIndex(item => media.id === item.id);
             console.log(i)
@@ -181,7 +196,7 @@ function onePhotographerTemplate(data) {
           
                   } if (event.key === "Escape") {
                     console.log("esc");
-                    lightbox.style.display = "none";
+                    return closeModal();
                     
                     
                   }
@@ -190,26 +205,15 @@ function onePhotographerTemplate(data) {
               })     
           });
 
-         
-
-          
-
-
-
+ 
           const poppriceCard = document.querySelector(".popprice_card");
-          console.log(poppriceCard)
-
-
-          let total = medias.reduce((sum, media) => sum + media.likes, 0)
+          console.log(poppriceCard);
+          let total = medias.reduce((sum, media) => sum + media.likes, 0);
           poppriceCard.children[0].textContent = total + " ♥";
           poppriceCard.children[1].textContent = price + "€ / jour";
-          
-
-
           let counter = media.likes
-          cardLikes.addEventListener("click", () => {
 
-            
+          cardLikes.addEventListener("click", () => {        
             if (cardLikes.classList.contains("like")) {
               counter--;
               cardLikes.classList.remove("like");
@@ -224,26 +228,23 @@ function onePhotographerTemplate(data) {
               total++
               cardLikes.textContent = counter + " ♥"
               poppriceCard.children[0].textContent = total + " ♥"
-              console.log("counter++")
-             
+              console.log("counter++")           
             }
             console.log(media.id);
             console.log(counter);
-    
-          });
-
-          
+          });        
         });
         
         
         const closeModal = document.getElementById("close_modal");
         const lightbox = document.getElementById("media_modal");
-
+        const main = document.getElementById("main")
         closeModal.addEventListener("click", () => {
-
           const child = document.querySelector('#current_media :nth-child(1)');
-
           lightbox.style.display = "none";
+          lightbox.setAttribute('aria-hidden', 'true')
+          main.setAttribute('aria-hidden', 'false')
+          closeModal.focus()
           console.log(child);
           child.remove();
           console.log("closed")
@@ -252,39 +253,8 @@ function onePhotographerTemplate(data) {
 
 
 
-    function dropdownSortByFn(orderBy, medias) {
+  
 
-   
-        switch (orderBy) {
-    
-          case "popularity": {
-            const mediaSort = medias.sort((a, b) => b.likes - a.likes);
-            console.log(medias);
-            break;
-          }
-    
-          case "date": {
-            medias.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            console.log(medias)
-            break;
-          }
-    
-          case "title": {
-            medias.sort((a, b) => a.title.localeCompare(b.title));
-            console.log(medias)
-            break;
-          }
-        }
-    
-        getMedias(medias);
-    
-    
-      }
-  
-  
     return { getUserCardDOM, getUserAvatarDOM, getMedias, dropdownSortByFn}
-  
-  
-  
 }
   

@@ -50,13 +50,18 @@ async function init() {
     const templatePhoto = onePhotographerTemplate(onePhotographer);
 
 			
-            let medias = data.media.filter((media) => media.photographerId === Number(id));
-    console.log(medias)
+    let medias = data.media.filter((media) => media.photographerId === Number(id));
+    
   
     
     const photographerSection = document.querySelector(".photograph-header");
     photographerSection.appendChild(templatePhoto.getUserCardDOM());
-    templatePhoto.getMedias(data.media);
+    templatePhoto.dropdownSortByFn("popularity" , medias);
+    
+    //templatePhoto.getMedias(data.media);
+   
+    
+
    
    
     

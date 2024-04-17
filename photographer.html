@@ -5,13 +5,18 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <html lang="fr">
     <title>Fisheye - photographe </title>
   </head>
+  
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <div id="link_container">
+        <img src="assets/images/logo.png" class="logo" id="logo" alt="FishEye logo" />
+      </div>
     </header>
-    <main id="main">
+
+    <main id="main" aria-hidden="false">
       <div class="photograph-header">
         <div class="profile">
           <h1 tabindex="0"></h1>
@@ -35,23 +40,23 @@
     </main>
     <div id="contact_modal">
 			<div class="modal">
-				<header>
+				
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
-        </header>
+          <img src="assets/icons/close.svg" alt="close modal" onclick="closeModal()" />
+        
         
 				<form id=form >
 					<div>
-						<label>Prénom</label>
-						<input id="first_name" name="first_name" />
+						<label for="first_name">Prénom</label>
+						<input id="first_name" name="first name" />
             <label for="last_name">Nom</label>
-            <input id="last_name" name="lastame" />
+            <input id="last_name" name="lastn_ame" />
             <label for="email">Email</label>
             <input id="email" name="email" />
             <label for="textarea">Message</label>
             <textarea id="textarea" name="textarea"></textarea>
 					</div>
-          <input class="contact_button" type="submit" value="Envoyer"></button>
+          <input class="contact_button" type="submit" aria-label="contact button" value="Envoyer"></button>
 				</form>
         
 			</div>
@@ -60,7 +65,8 @@
       <span tabindex="0"></span>
       <span tabindex="0"></span>
     </div>
-    <div id="media_modal" aria-label="Modal" role="dialog" aria-hidden="true" tabindex="-1">
+
+    <div id="media_modal" aria-label="Modal" role="dialog" aria-hidden="true" aria-describedby="formulaire de contact" tabindex="0">
       <button
         class="left_arrow"
         id="previous_media"

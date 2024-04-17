@@ -2,6 +2,9 @@
     display: none;
 }
 
+#link_container {
+    width: 100%;
+}
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
