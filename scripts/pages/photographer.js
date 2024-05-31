@@ -17,7 +17,7 @@ async function getPhotographers() {
 function displayPhotographer(photographer) {
     const photographerSection = document.querySelector(".photograph-header");
     const photographerModel = photographerInfo(photographer);
-    const userCardDOM = photographerModel.getUserInfoDOM();
+    const userCardDOM = photographerModel.getUserCardDOM();
     photographerSection.appendChild(userCardDOM);
     
 }
@@ -37,6 +37,7 @@ async function displayMedia(medias, templatePhoto) {
 }
 
 
+
 async function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -51,12 +52,17 @@ async function init() {
 
 			
     let medias = data.media.filter((media) => media.photographerId === Number(id));
-    
-  
+    photographer = data.photographers.find(
+        (photographer) => photographer.id === id
+      );
+      
     
     const photographerSection = document.querySelector(".photograph-header");
     photographerSection.appendChild(templatePhoto.getUserCardDOM());
     templatePhoto.dropdownSortByFn("popularity" , medias);
+    templatePhoto.priceTotalLikes();
+    
+    
     
     //templatePhoto.getMedias(data.media);
    

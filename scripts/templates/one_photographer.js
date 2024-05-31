@@ -1,8 +1,13 @@
+const LIKES = 0;
 function onePhotographerTemplate(data) {
 
     const { name, portrait, city, country, tagline, id, price } = data;
+
+    
+    
   
     const picture = `../assets/photographers/${portrait}`;
+    
   
     function getUserCardDOM() {
   
@@ -14,25 +19,14 @@ function onePhotographerTemplate(data) {
       const profileLocation = document.querySelector(".profile > h2");
       const profileTagline = document.querySelector(".profile > p");
       const profilePic = document.querySelector(".profile_pic");
-  
-      
-  
-      
-
       const logo = document.getElementById("logo");
+      profileDiv = document.querySelector(".profile")
       console.log(linkContainer)
   
-      Link.href = "./index.html";
-      linkContainer.appendChild(Link);
-      Link.appendChild(logo)
       
   
-  
-  
-  
-  
       img.src = `./assets/photographers/${portrait}`;
-  
+      Link.href = "./index.html";
       profileName.textContent = name;
       profileName.setAttribute("aria-label", "Nom du photographe");
       profileLocation.textContent = city + ', ' + country;
@@ -41,12 +35,13 @@ function onePhotographerTemplate(data) {
       profileTagline.setAttribute("aria-label", "Tag line");
   
   
-      profileDiv = document.querySelector(".profile")
-  
+     
       profileDiv.appendChild(profileName);
       profileDiv.appendChild(profileLocation);
       profileDiv.appendChild(profileTagline);
       profilePic.appendChild(img);
+      linkContainer.appendChild(Link);
+      Link.appendChild(logo)
   
   
   
@@ -83,7 +78,7 @@ function onePhotographerTemplate(data) {
           }
         }
         getMedias(medias);  
-  }
+    }
 
 
 
@@ -100,12 +95,12 @@ function onePhotographerTemplate(data) {
         const onNextMedia = (i, medias, lightboxMedia)=> {
             if(medias[i+1]) {  
               i++;
-              console.log("i++")
+              console.log("i++");
               lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
               return i;
               
             }else {
-              i=0
+              i=0;
               lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
               return i;
             }   
@@ -114,7 +109,7 @@ function onePhotographerTemplate(data) {
         const onPreviousMedia = (i, medias, lightboxMedia)=> {
             if(medias[i-1]) {  
               i--;
-              console.log("i--")
+              console.log("i--");
               lightboxMedia.setAttribute('src', `./assets/images/${id}/${medias[i]?.image || medias[i].video}`);
               return i;
               
@@ -137,7 +132,7 @@ function onePhotographerTemplate(data) {
           article.dataset.id = media.id;
           const cardDetails = document.createElement("div");
           const cardName = document.createElement("span");
-          const cardLikes = document.createElement("span");
+          const cardLikes = document.createElement("button");
     
           typeOfMedia.setAttribute('src', `./assets/images/${id}/${media?.video || media.image}`);
           typeOfMedia.controls = true;
@@ -146,6 +141,7 @@ function onePhotographerTemplate(data) {
           cardDetails.classList.add("card_details")
           cardName.textContent = media.title;
           cardLikes.textContent = media.likes + " ♥";
+          cardLikes.href = "#";
           cardLikes.classList.add("card_likes");
     
           mediaContent.appendChild(article)
@@ -195,45 +191,49 @@ function onePhotographerTemplate(data) {
                     i = onNextMedia(i, medias, lightboxMedia);
           
                   } if (event.key === "Escape") {
+                    const child = document.querySelector('#current_media :nth-child(1)');
                     console.log("esc");
-                    return closeModal();
-                    
-                    
+                    lightbox.style.display = "none";
+                    console.log(child);
+                    child.remove();
+                    console.log("closed")           
                   }
                   event.preventDefault();
                 }          
-              })     
-          });
+            })     
+          })
 
  
-          const poppriceCard = document.querySelector(".popprice_card");
-          console.log(poppriceCard);
-          let total = medias.reduce((sum, media) => sum + media.likes, 0);
-          poppriceCard.children[0].textContent = total + " ♥";
-          poppriceCard.children[1].textContent = price + "€ / jour";
-          let counter = media.likes
+          
+          let counter = media.likes;
+          cardLikes.focus()
+          ;
 
-          cardLikes.addEventListener("click", () => {        
+          cardLikes.addEventListener("click", () => {
+
+                 
             if (cardLikes.classList.contains("like")) {
+              cardLikes.focus();
               counter--;
-              cardLikes.classList.remove("like");
+              
               console.log("counter--");
               cardLikes.textContent = counter + " ♥";
-              total--;
-              console.log(total)
-              poppriceCard.children[0].textContent = total + " ♥"
+              cardLikes.classList.remove("like");
+              
             } else {
+              cardLikes.focus()
               cardLikes.classList.add("like");
               counter++;
-              total++
               cardLikes.textContent = counter + " ♥"
-              poppriceCard.children[0].textContent = total + " ♥"
+              
               console.log("counter++")           
             }
+            priceTotalLikes()
             console.log(media.id);
             console.log(counter);
-          });        
-        });
+            
+          })       
+        })
         
         
         const closeModal = document.getElementById("close_modal");
@@ -247,14 +247,53 @@ function onePhotographerTemplate(data) {
           closeModal.focus()
           console.log(child);
           child.remove();
-          console.log("closed")
+          console.log("closed");
         })
     }
+
+   
+
+    function priceTotalLikes() {
+      // let totalLikes = 0;
+      const poppriceCard = document.querySelector(".popprice_card"); 
+      const poppriceCardLikes = document.querySelector(".popprice_like"); 
+      
+      const cards = [...document.querySelectorAll('.card_likes')];// Cartes avec mes likes
+      const totalLikes = cards.reduce((acc, card) => {
+        const likes = parseInt(card.innerText);
+        return acc + likes;
+      }, 0);
+
+      console.log('>>>>>', totalLikes)
+
+      // my_arr.forEach((e) => {
+      //   console.log(parseInt(e.innerText));
+      //   let innerTxt = parseInt(e.innerText);
+        
+        
+      //   totalLikes = innerTxt + totalLikes;
+        
+        
+      // });
+      console.log("coucou", totalLikes);
+      poppriceCardLikes.textContent = totalLikes + " ♥";
+      
+      
+      poppriceCard.children[1].textContent = price + "€ / jour";
+      
+      
+    }
+
+
+   
+    
+    
+    
 
 
 
   
 
-    return { getUserCardDOM, getUserAvatarDOM, getMedias, dropdownSortByFn}
+    return { getUserCardDOM, getUserAvatarDOM, getMedias, dropdownSortByFn, priceTotalLikes}
 }
   

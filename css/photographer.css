@@ -87,6 +87,9 @@
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
+    border: none;
+    background-color: white;
+    
     
 }
 
@@ -126,7 +129,7 @@
 }
 
 .modal header h2 {
-    font-size: 64px;
+    font-size: 50px;
     font-weight: normal;
     text-align: center;
 }
@@ -151,9 +154,15 @@ form div {
     margin-bottom: 26px;
 }
 
-form input {
+#textarea {
     width: 100%;
     height: 68px;
+
+}
+
+form input {
+    width: 100%;
+    height: 48px;
     border: none;
     border-radius: 5px;
 }

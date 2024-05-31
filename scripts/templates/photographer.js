@@ -18,6 +18,7 @@ function photographerTemplate(data) {
         
         img.setAttribute("src", picture);
         img.setAttribute('alt', name);
+        linkDiv.classList.add("link_div");
         linkDiv.appendChild(img);    
         link.appendChild(h2);
         h2.textContent = name;

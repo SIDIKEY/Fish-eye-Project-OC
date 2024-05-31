@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <html lang="fr">
+    
     <title>Fisheye - photographe </title>
   </head>
   
@@ -23,7 +24,7 @@
           <h2 tabindex="0"></h2>
           <p tabindex="0"></p>
         </div>
-        <button class="contact_button" aria-label="Contactez-moi" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" aria-label="Contactez moi"  onclick="displayModal()">Contactez-moi</button>
         <div class="profile_pic"></div>
       </div>
 
@@ -38,14 +39,16 @@
 
       <div class="media_content"></div>
     </main>
-    <div id="contact_modal">
+    <div id="contact_modal" aria-label="modal">
 			<div class="modal">
-				
+				<header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" alt="close modal" onclick="closeModal()" />
+          <img src="assets/icons/close.svg" class="button" alt="close modal" aria-label="fermez la modale" onclick="closeModal()" tabindex="0"/>
+        </header>
+          
         
         
-				<form id=form >
+				<form id=form role="dialog" aria-describedby="formulaire de contact" aria-hidden="true">
 					<div>
 						<label for="first_name">Prénom</label>
 						<input id="first_name" name="first name" />
@@ -62,11 +65,11 @@
 			</div>
 		</div>
     <div class="popprice_card" id="popprice_card" aria-label="prix et likes" tabindex="0">
-      <span tabindex="0"></span>
+      <span class= "popprice_like" tabindex="0"></span>
       <span tabindex="0"></span>
     </div>
 
-    <div id="media_modal" aria-label="Modal" role="dialog" aria-hidden="true" aria-describedby="formulaire de contact" tabindex="0">
+    <div id="media_modal" aria-label="Modal" role="dialog" aria-hidden="true" aria-describedby="lightbox" tabindex="0">
       <button
         class="left_arrow"
         id="previous_media"
